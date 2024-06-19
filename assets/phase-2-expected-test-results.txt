@@ -1,0 +1,156 @@
+Welcome to the Restaurant Reservation System!
+Enter commands (type 'exit' to finish):
+ echo >> // commands to create the basic domain entities
+ echo >> create_restaurant,REST001,Olive Garden,Coral Springs,FL,33071,45,false,6
+Restaurant created: REST001 (Olive Garden) - Coral Springs, FL 33071
+Enter command: 
+ echo >> create_restaurant,REST002,Cheesecake Factory,Boca Raton,FL,33431,48,false,6
+Restaurant created: REST002 (Cheesecake Factory) - Boca Raton, FL 33431
+Enter command: 
+ echo >> create_restaurant,REST003,Papa Johns,Lauderdale Lakes,FL,33313,50,false,6
+Restaurant created: REST003 (Papa Johns) - Lauderdale Lakes, FL 33313
+Enter command: 
+ echo >> create_restaurant,REST004,IL Mulino,Tampa,FL,33019,33,false,6
+Restaurant created: REST004 (IL Mulino) - Tampa, FL 33019
+Enter command: 
+ echo >> 
+ echo >> create_customer,CUST001,Angel,Cabrera,Miami,FL,33122,100.0
+Customer added: CUST001 - Angel Cabrera
+Enter command: 
+ echo >> create_customer,CUST002,Mark,Moss,Atlanta,GA,30313,100.0
+Customer added: CUST002 - Mark Moss
+Enter command: 
+ echo >> create_customer,CUST003,Neel,Ganediwal,Parkland,FL,33067,100.0
+Customer added: CUST003 - Neel Ganediwal
+Enter command: 
+ echo >> create_customer,CUST004,Henry,Owen,Chicago,IL,60629,100.0
+Customer added: CUST004 - Henry Owen
+Enter command: 
+ echo >> 
+ echo >> make_reservation,CUST001,REST001,4,2024-05-24,19:00,80
+Reservation requested for Angel Cabrera
+Reservation confirmed
+Reservation made for CUST001 (Angel Cabrera) at Olive Garden
+Enter command: 
+ echo >> make_reservation,CUST002,REST002,5,2024-05-23,19:00,100
+Reservation requested for Mark Moss
+Reservation confirmed
+Reservation made for CUST002 (Mark Moss) at Cheesecake Factory
+Enter command: 
+ echo >> make_reservation,CUST003,REST003,6,2024-05-24,19:00,70
+Reservation requested for Neel Ganediwal
+Reservation confirmed
+Reservation made for CUST003 (Neel Ganediwal) at Papa Johns
+Enter command: 
+ echo >> 
+ echo >> // unable to make reservation because no other available table at restaurant within two hours
+ echo >> make_reservation,CUST004,REST001,4,2024-05-24,19:00,100
+Reservation requested for Henry Owen
+Reservation request denied, table has another active reservation within 2 hours of the requested time
+Enter command: 
+ echo >> 
+ echo >> // unable to make reservation because customer already has another reservation within two hours
+ echo >> make_reservation,CUST001,REST003,4,2024-05-24,17:30,90
+Reservation requested for Angel Cabrera
+Reservation request denied, customer already has reservation with another restaurant within 2 hours of the requested time
+Enter command: 
+ echo >> 
+ echo >> // arrival on time
+ echo >> customer_arrival,CUST001,REST001,2024-05-24,18:50,19:00
+Customer CUST001 (Angel Cabrera) has arrived at Olive Garden
+Angel Cabrera - Successfully completed reservation
+Full credits rewarded
+Seats were available, Angel Cabrera seated
+Credits: 80
+Misses: 0
+Enter command: 
+ echo >> 
+ echo >> // arrival too early
+ echo >> customer_arrival,CUST002,REST002,2024-05-23,18:00,19:00
+Customer CUST002 (Mark Moss) has arrived early at Cheesecake Factory
+Please come back during the reservation window
+No credits rewarded and no misses added
+Credits: 0
+Misses: 0
+Enter command: 
+ echo >> 
+ echo >> // arrival too late
+ echo >> customer_arrival,CUST003,REST003,2024-05-24,19:30,19:00
+Customer CUST003 (Neel Ganediwal) has arrived late at Papa Johns
+Neel Ganediwal - Missed reservation
+No credits rewarded and 1 miss added
+Seats were available, Neel Ganediwal seated
+Credits: 0
+Misses: 1
+Enter command: 
+ echo >> 
+ echo >> // walk in party (no reservation)               
+ echo >> customer_arrival,CUST004,REST004,2024-05-23,19:30,null
+Henry Owen - Walk-in party
+No reservation, however open table so request validated
+No credits rewarded and no misses added
+Seats were available, Henry Owen seated
+Credits: 0
+Misses: 0
+Enter command: 
+ echo >> 
+ echo >> make_reservation,CUST001,REST003,4,2024-05-25,19:00,70
+Reservation requested for Angel Cabrera
+Reservation confirmed
+Reservation made for CUST001 (Angel Cabrera) at Papa Johns
+Enter command: 
+ echo >> customer_arrival,CUST001,REST003,2024-05-25,19:30,19:00
+Customer CUST001 (Angel Cabrera) has arrived late at Papa Johns
+Angel Cabrera - Missed reservation
+No credits rewarded and 1 miss added
+Seats were available, Angel Cabrera seated
+Credits: 80
+Misses: 1
+Enter command: 
+ echo >> 
+ echo >> make_reservation,CUST001,REST004,4,2024-05-26,19:00,30
+Reservation requested for Angel Cabrera
+Reservation confirmed
+Reservation made for CUST001 (Angel Cabrera) at IL Mulino
+Enter command: 
+ echo >> customer_arrival,CUST001,REST004,2024-05-26,19:30,19:00
+Customer CUST001 (Angel Cabrera) has arrived late at IL Mulino
+Angel Cabrera - Missed reservation
+No credits rewarded and 1 miss added
+Seats were available, Angel Cabrera seated
+Credits: 80
+Misses: 2
+Enter command: 
+ echo >> make_reservation,CUST001,REST002,4,2024-05-28,19:00,50
+Reservation requested for Angel Cabrera
+Reservation confirmed
+Reservation made for CUST001 (Angel Cabrera) at Cheesecake Factory
+Enter command: 
+ echo >> customer_arrival,CUST001,REST002,2024-05-28,19:10,19:00
+Customer CUST001 (Angel Cabrera) has arrived at Cheesecake Factory
+Angel Cabrera - Successfully completed reservation
+Full credits rewarded
+Seats were available, Angel Cabrera seated
+Credits: 130
+Misses: 2
+Enter command: 
+ echo >> 
+ echo >> // three misses reached, so reset both credits and misses back to 0
+ echo >> make_reservation,CUST001,REST002,4,2024-05-27,19:00,50
+Reservation requested for Angel Cabrera
+Reservation confirmed
+Reservation made for CUST001 (Angel Cabrera) at Cheesecake Factory
+Enter command: 
+ echo >> customer_arrival,CUST001,REST002,2024-05-27,19:30,19:00
+Customer CUST001 (Angel Cabrera) has arrived late at Cheesecake Factory
+Angel Cabrera - Missed reservation
+No credits rewarded and 1 miss added
+Misses: 3
+Angel Cabrera - 3 Misses reached, both misses and credits will reset back to 0
+Seats were available, Angel Cabrera seated
+Credits: 0
+Misses: 0
+Enter command: 
+ echo >> 
+ echo >> // cease the simulation
+ echo >> exit
