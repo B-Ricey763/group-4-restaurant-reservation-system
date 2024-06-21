@@ -1,17 +1,15 @@
 package org.group4;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class IntegrationTests {
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+public class Integration_Tests {
     private final HashMap<String, Restaurant> restaurants = new HashMap<>();
     private final HashMap<String, Customer> customers = new HashMap<>();
 
@@ -68,7 +66,7 @@ public class IntegrationTests {
     }
 
     @Test
-    void testHappyPath() {
+    void Customer_Reservation_And_Arrival_Happy_Path() {
         Customer customer = customers.get("CUST001");
         Restaurant restaurant = restaurants.get("REST001");
 
@@ -82,8 +80,10 @@ public class IntegrationTests {
 
         // customer_arrival,CUST001,REST001,2024-05-24,18:50,19:00
         ArrivalStatus status = restaurant.customerArrives(customer, LocalDateTime.parse("2024-05-24T19:00:00"), LocalTime.parse("18:50:00"));
-        assertEquals(ArrivalStatus.ON_TIME, status, "On time arrival not handled properly");
-        assertEquals(initialCredits + reservationCredits, customer.getCredits(), "Customer credits not awarded for on time reservation");
-        assertEquals(initalSpace - reservation.getPartySize(), restaurant.checkSpace(reservation.getDateTime()), "Restaurant space not updated properly");
+        assertAll("Customer Arrival",
+                () -> assertEquals(ArrivalStatus.ON_TIME, status, "On time arrival not handled properly"),
+                () -> assertEquals(initialCredits + reservationCredits, customer.getCredits(), "Customer credits not awarded for on time reservation"),
+                () -> assertEquals(initalSpace - reservation.getPartySize(), restaurant.checkSpace(reservation.getDateTime()), "Restaurant space not updated properly")
+        );
     }
 }
