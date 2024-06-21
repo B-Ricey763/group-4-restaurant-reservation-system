@@ -68,8 +68,11 @@ class Restaurant {
             return null;
         }
         Reservation reservation = new Reservation(customer, partySize, reservationDateTime, credits);
+        if (!customer.checkRes(reservation)) {
+            return null;
+        }
         reservations.put(reservation.getKey(), reservation);
-        // If the reservation fails, just return null
+        customer.addRes(reservation);
         return reservation;
     }
 

@@ -1,6 +1,9 @@
 package org.group4;
 
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 class Customer {
@@ -11,7 +14,7 @@ class Customer {
     private double funds;
     private int credits;
     private int missedReservations;
-    private HashMap<String, Reservation> reservations;
+    private final List<Reservation> reservations = new ArrayList<>();
 
     public Customer(String uniqueId, String firstName, String lastName, Address address, double funds) {
         this.id = (uniqueId == null) ? UUID.randomUUID().toString() : uniqueId;
@@ -20,7 +23,6 @@ class Customer {
         this.lastName = lastName;
         this.address = address;
         this.funds = funds;
-        reservations = new HashMap<String, Reservation>();
     }
 
     public String getFirstName() {
@@ -63,4 +65,16 @@ class Customer {
         return address;
     }
 
+    public boolean checkRes(Reservation reservation) {
+        for (Reservation r : reservations) {
+            if (Duration.between(r.getDateTime(), reservation.getDateTime()).abs().compareTo(Duration.ofHours(2)) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void addRes(Reservation reservation) {
+        reservations.add(reservation);
+    }
 }
