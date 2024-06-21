@@ -54,10 +54,19 @@ class Restaurant {
         this.top10 = top10;
     }
 
+    // TODO: handle the case when the date is within 2 hours or other edge cases, like when customer has no funds
+    //  Also remember since we are using a unique key for each reservation, the customer can absolutely NOT book a reservation
+    //  for the same time.
     public Reservation makeReservation(Customer customer, int partySize, LocalDateTime reservationDateTime, int credits) {
-        // TODO: handle the case when the date is within 2 hours or other edge cases, like when customer has no funds
-        //  Also remember since we are using a unique key for each reservation, the customer can absolutely NOT book a reservation
-        //  for the same time.
+        if (partySize < 1 || reservationDateTime == null || customer == null) {
+            return null;
+        }
+        if (LocalDateTime.now().compareTo(reservationDateTime.minusHours(2)) > 0) {
+            return null;
+        }
+        if (checkSpace(reservationDateTime) < partySize) {
+            return null;
+        }
         Reservation reservation = new Reservation(customer, partySize, reservationDateTime, credits);
         reservations.put(reservation.getKey(), reservation);
         // If the reservation fails, just return null

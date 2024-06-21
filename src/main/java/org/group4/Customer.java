@@ -1,5 +1,6 @@
 package org.group4;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 class Customer {
@@ -10,6 +11,7 @@ class Customer {
     private double funds;
     private int credits;
     private int missedReservations;
+    private HashMap<String, Reservation> reservations;
 
     public Customer(String uniqueId, String firstName, String lastName, Address address, double funds) {
         this.id = (uniqueId == null) ? UUID.randomUUID().toString() : uniqueId;
@@ -18,6 +20,7 @@ class Customer {
         this.lastName = lastName;
         this.address = address;
         this.funds = funds;
+        reservations = new HashMap<String, Reservation>();
     }
 
     public String getFirstName() {
