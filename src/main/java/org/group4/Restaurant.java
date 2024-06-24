@@ -57,7 +57,7 @@ class Restaurant {
     public Reservation makeReservation(Customer customer, int partySize, LocalDateTime reservationDateTime, int credits) {
         // TODO: handle the case when the date is within 2 hours or other edge cases, like when customer has no funds
         //  Also remember since we are using a unique key for each reservation, the customer can absolutely NOT book a reservation
-        //  for the same time.
+        //  for the same time!
         Reservation reservation = new Reservation(customer, partySize, reservationDateTime, credits);
         reservations.put(reservation.getKey(), reservation);
         // If the reservation fails, just return null
