@@ -9,6 +9,8 @@ class Reservation {
     private final int credits;
     private final int partySize;
 
+    public static final int RESERVATION_DURATION = 2;
+
     public static String generateKey(Customer _customer, LocalDateTime _dateTime) {
         return String.format("Customer=%s-DateTime=%s", _customer.getId(), _dateTime);
     }
