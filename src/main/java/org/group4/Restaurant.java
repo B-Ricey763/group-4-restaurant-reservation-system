@@ -61,11 +61,11 @@ class Restaurant {
         if (partySize < 1 || reservationDateTime == null || customer == null) {
             throw new IllegalArgumentException("Invalid parameters");
         }
+
         if (checkSpace(reservationDateTime) < partySize) {
-            return null;
+            throw new NoSpaceException();
         }
         if (customer.isReservationConflict(reservationDateTime)) {
-            return null;
             throw new ReservationConflictException();
         }
         Reservation reservation = new Reservation(customer, partySize, reservationDateTime, credits);
