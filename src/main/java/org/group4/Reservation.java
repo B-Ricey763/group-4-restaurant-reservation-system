@@ -5,10 +5,10 @@ import java.util.Objects;
 
 class Reservation {
     private final Customer customer;
-    private final LocalDateTime dateTime;
-    private final LocalDateTime endTime;
+    private LocalDateTime dateTime;
+    private LocalDateTime endTime;
     private final int credits;
-    private final int partySize;
+    private int partySize;
 
     public static final int RESERVATION_DURATION = 2;
 
@@ -28,12 +28,21 @@ class Reservation {
         return dateTime;
     }
 
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+        this.endTime = dateTime.plusHours(2);
+    }
+
     public LocalDateTime getEndTime() {
         return endTime;
     }
 
     public int getCredits() {
         return credits;
+    }
+
+    public void setPartySize(int partySize) {
+        this.partySize = partySize;
     }
 
     public int getPartySize() {
