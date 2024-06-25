@@ -6,6 +6,7 @@ import java.util.Objects;
 class Reservation {
     private final Customer customer;
     private final LocalDateTime dateTime;
+    private final LocalDateTime endTime;
     private final int credits;
     private final int partySize;
 
@@ -17,11 +18,16 @@ class Reservation {
         this.customer = customer;
         this.partySize = partySize;
         this.dateTime = dateTime;
+        this.endTime = dateTime.plusHours(2);
         this.credits = credits;
     }
 
     public LocalDateTime getDateTime() {
         return dateTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public int getCredits() {
@@ -41,6 +47,7 @@ class Reservation {
         return "Reservation{" +
                 "customer=" + customer +
                 ", dateTime=" + dateTime +
+                ", endTime=" + endTime +
                 ", credits=" + credits +
                 ", partySize=" + partySize +
                 '}';
