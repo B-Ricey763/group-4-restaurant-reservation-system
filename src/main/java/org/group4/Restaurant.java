@@ -66,6 +66,7 @@ class Restaurant {
         }
         if (customer.isReservationConflict(reservationDateTime)) {
             return null;
+            throw new ReservationConflictException();
         }
         Reservation reservation = new Reservation(customer, partySize, reservationDateTime, credits);
         reservations.put(reservation.getKey(), reservation);
