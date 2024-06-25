@@ -59,18 +59,22 @@ class Restaurant {
     //  for the same time.
     public Reservation makeReservation(Customer customer, int partySize, LocalDateTime reservationDateTime, int credits) {
         if (partySize < 1 || reservationDateTime == null || customer == null) {
+            throw new IllegalArgumentException("Invalid parameters");
+        }
+
+        // What is this doing?
+        if (LocalDateTime.now().isAfter(reservationDateTime.minusHours(2))) {
             return null;
         }
-        if (LocalDateTime.now().compareTo(reservationDateTime.minusHours(2)) > 0) {
-            return null;
-        }
+
         if (checkSpace(reservationDateTime) < partySize) {
             return null;
         }
-        Reservation reservation = new Reservation(customer, partySize, reservationDateTime, credits);
-        if (!customer.checkRes(reservation)) {
+        if (customer.isReservationConflict(reservationDateTime)) {
             return null;
         }
+
+        Reservation reservation = new Reservation(customer, partySize, reservationDateTime, credits);
         reservations.put(reservation.getKey(), reservation);
         customer.addRes(reservation);
         return reservation;
