@@ -73,17 +73,24 @@ public class Integration_Tests {
         int initialCredits = customer.getCredits();
         int reservationCredits = 80;
         int initalSpace = restaurant.getSeatingCapacity();
+        LocalDateTime reservationDateTime = LocalDateTime.parse("2024-05-24T19:00:00");
 
         // make_reservation,CUST001,REST001,4,2024-05-24,19:00,80
-        Reservation reservation = restaurant.makeReservation(customer, 4, LocalDateTime.parse("2024-05-24T19:00:00"), reservationCredits);
+        Reservation reservation = restaurant.makeReservation(customer, 4, reservationDateTime, reservationCredits);
         assertNotNull(reservation, "Reservation not created properly");
 
         // customer_arrival,CUST001,REST001,2024-05-24,18:50,19:00
-        ArrivalStatus status = restaurant.customerArrives(customer, LocalDateTime.parse("2024-05-24T19:00:00"), LocalTime.parse("18:50:00"));
+        ArrivalStatus status = restaurant.customerArrives(customer, reservationDateTime, LocalTime.parse("18:50:00"));
         assertAll("Customer Arrival",
                 () -> assertEquals(ArrivalStatus.ON_TIME, status, "On time arrival not handled properly"),
                 () -> assertEquals(initialCredits + reservationCredits, customer.getCredits(), "Customer credits not awarded for on time reservation"),
                 () -> assertEquals(initalSpace - reservation.getPartySize(), restaurant.checkSpace(reservation.getDateTime()), "Restaurant space not updated properly")
         );
     }
+
+    @Test
+    void No_Available_Tables() {
+
+    }
 }
+
