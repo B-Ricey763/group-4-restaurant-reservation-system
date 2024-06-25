@@ -82,6 +82,7 @@ class Restaurant {
             if (reservation.getCustomer().getMissedReservations() == 3) {
                 reservation.getCustomer().setMissedReservations(0);
                 reservation.getCustomer().setCredits(0);
+                return ArrivalStatus.LATE_RESET;
             }
             return ArrivalStatus.LATE;
         } else if (arrivalTime.isBefore(reservationTime) && arrivalTime.isBefore(reservationTime.minusMinutes(30))) {
