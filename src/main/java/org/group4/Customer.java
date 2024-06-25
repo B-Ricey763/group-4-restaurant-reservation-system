@@ -18,6 +18,7 @@ class Customer {
         this.lastName = lastName;
         this.address = address;
         this.funds = funds;
+        this.missedReservations = 0;
     }
 
     public String getFirstName() {

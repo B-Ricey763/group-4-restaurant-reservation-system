@@ -78,10 +78,15 @@ class Restaurant {
         LocalTime reservationTime = reservation.getDateTime().toLocalTime();
         if (arrivalTime.isAfter(reservationTime.plusMinutes(15))) {
             reservation.getCustomer().setMissedReservations(reservation.getCustomer().getMissedReservations() + 1);
+            // If customer misses three reservations reset missed reservation counter and reset credits.
+            if (reservation.getCustomer().getMissedReservations() == 3) {
+                reservation.getCustomer().setMissedReservations(0);
+                reservation.getCustomer().setCredits(0);
+            }
             return ArrivalStatus.LATE;
-        } else if (arrivalTime.isBefore(reservationTime)) {
+        } else if (arrivalTime.isBefore(reservationTime) && arrivalTime.isBefore(reservationTime.minusMinutes(30))) {
             return ArrivalStatus.EARLY;
-        } else if (arrivalTime.equals(reservationTime) || arrivalTime.isBefore(reservationTime.plusMinutes(15))) {
+        } else if (arrivalTime.isBefore(reservationTime.plusMinutes(15))) {
             reservation.getCustomer().setCredits(reservation.getCustomer().getCredits() + reservation.getCredits());
             return ArrivalStatus.ON_TIME;
         }
