@@ -76,7 +76,6 @@ class Restaurant {
 
     public ArrivalStatus customerArrives(Customer customer, LocalDateTime reservationDateTime, LocalTime arrivalTime) {
         Reservation reservation = reservations.get(Reservation.generateKey(customer, reservationDateTime));
-        System.out.println("Customer arrived with " + reservation);
         // TODO: Handle cases, look at canvas assignment for details, use Arrival status enum:
         //  - 15 minutes late: mark as missed, handle cases
         //  - on time: seat and reward
