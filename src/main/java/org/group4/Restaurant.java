@@ -108,11 +108,17 @@ class Restaurant {
                 reservation.getCustomer().setCredits(0);
                 reset = true;
             }
-            LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), arrivalTime);
-            int partySize = reservation.getPartySize();
-            int credits = reservation.getCredits();
-            removeReservation(customer, reservationDateTime);
-            makeReservation(customer, partySize, dateTime, credits);
+            // LocalDateTime dateTime = LocalDateTime.of(reservationDate, arrivalTime);
+            // int partySize = reservation.getPartySize();
+            // int credits = reservation.getCredits();
+            // removeReservation(customer, reservationDateTime);
+            // makeReservation(customer, partySize, dateTime, credits);
+            int orginalParty = reservation.getPartySize();
+            reservation.setPartySize(0);
+            if (checkSpace(reservationDateTime) >= reservation.getPartySize()) {
+                reservation.setDateTime(reservationDateTime);
+                reservation.setPartySize(orginalParty);
+            }
             if (reset) {
                 return ArrivalStatus.LATE_RESET;
             }
