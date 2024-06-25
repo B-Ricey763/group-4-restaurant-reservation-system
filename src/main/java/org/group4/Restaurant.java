@@ -88,14 +88,40 @@ class Restaurant {
         //  - on time: seat and reward
         //  - arrive early: tell them to come back later
         //  - walk in
-
-        return ArrivalStatus.ON_TIME;
+        if (reservation == null) {
+            return ArrivalStatus.WALK_IN;
+        }
+        LocalTime reservationTime = reservation.getDateTime().toLocalTime();
+        if (arrivalTime.isAfter(reservationTime.plusMinutes(15))) {
+            reservation.getCustomer().setMissedReservations(reservation.getCustomer().getMissedReservations() + 1);
+            // If customer misses three reservations reset missed reservation counter and reset credits.
+            if (reservation.getCustomer().getMissedReservations() == 3) {
+                reservation.getCustomer().setMissedReservations(0);
+                reservation.getCustomer().setCredits(0);
+                return ArrivalStatus.LATE_RESET;
+            }
+            return ArrivalStatus.LATE;
+        } else if (arrivalTime.isBefore(reservationTime) && arrivalTime.isBefore(reservationTime.minusMinutes(30))) {
+            return ArrivalStatus.EARLY;
+        } else if (arrivalTime.isBefore(reservationTime.plusMinutes(15))) {
+            reservation.getCustomer().setCredits(reservation.getCustomer().getCredits() + reservation.getCredits());
+            return ArrivalStatus.ON_TIME;
+        }
+        return ArrivalStatus.WALK_IN;
     }
 
     public int checkSpace(LocalDateTime arrivalTime) {
         // TODO: calculate the number of seats available based on the reservations at the time.
         //  Remember, a walk in party is treated like a reservation, so we can just use that list
-        return seatingCapacity;
+        int usedSeats = 0;
+        for (Reservation reservation : reservations.values()) {
+            if (reservation.getDateTime().isEqual(arrivalTime) ||
+                (reservation.getDateTime().isBefore(arrivalTime) && 
+                reservation.getEndTime().isAfter(arrivalTime))) {
+                usedSeats += reservation.getPartySize();
+            }
+        } 
+        return seatingCapacity - usedSeats;
     }
 
     @Override
